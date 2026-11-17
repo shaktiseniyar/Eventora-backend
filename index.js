@@ -12,11 +12,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/events", eventRoutes);
-app.use("/api/bookings", bookingRoutes);
-
 // Connect to MongoDB
 // mongoose.connect(process.env.MONGO_URI, {
 // })
@@ -28,8 +23,6 @@ let isConnected = false;
 async function connectToDatabase() {
     try {
         await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
         });
         isConnected = true;
         console.log("MongoDB connected");
@@ -50,5 +43,10 @@ app.use((req, res, next) => {
 // app.listen(PORT, () => {
 //     console.log(`Server is running on port ${PORT}`);
 // });
+
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 module.exports = app;
